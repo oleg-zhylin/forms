@@ -1,0 +1,57 @@
+<div class="container" >
+  <div class="login-form">
+    <div class="main-div">
+      <form #f="ngForm" (ngSubmit)="sendForm(f)">
+        <div *ngIf="form && form.params && form.params.params_defs as params; else loading">
+          <div *ngFor="let element of params">
+            <div *ngIf="element.type == 'Text'">
+              <label>
+                <span>{{element.label}} </span>
+                <input class="form-control"
+                  [type]="getType(element)"
+                  placeholder="min is {{element.lower_val}} and max is {{element.upper_val}}"
+                  [id]="element.id"
+                  [name]="element.name"
+                  [(ngModel)]="element.init1"
+                  required
+                  #[element.name]="ngModel"
+                  [min]="element.lower_val"
+                  [max]="element.upper_val"
+                />
+                <span *ngIf="f.form.controls[element.name] && f.form.controls[element.name].valid == false" class="text-danger">
+                  <span *ngIf="f.form.controls[element.name].errors && f.form.controls[element.name].errors.required">
+                    Field is required, please type it.
+                  </span>
+                  <span *ngIf="f.form.controls[element.name].errors && f.form.controls[element.name].errors.min">
+                    Field min value need be {{f.form.controls[element.name].errors.min.min}}
+                    but You typed {{f.form.controls[element.name].errors.min.actual}} .
+                  </span>
+                  <span *ngIf="f.form.controls[element.name].errors && f.form.controls[element.name].errors.max">
+                    Field max value need be {{f.form.controls[element.name].errors.max.max}}
+                    but You typed {{f.form.controls[element.name].errors.max.actual}} .
+                  </span>
+                </span>
+              </label><span>{{element.desc}}</span><br>
+            </div>
+            <div *ngIf="element.type == 'ComboBox'">
+              <label> <span>{{element.label}}: </span>
+                <ng-multiselect-dropdown
+                  [placeholder]="'custom placeholder'"
+                  [data]="getOptions(element)"
+                  ngModel
+                  [name]="element.name"
+                  [settings]="dropdownSettings"
+                  (onSelect)="onItemSelect($event, element)"
+                  (onSelectAll)="onSelectAll($event, element)"
+                >
+                </ng-multiselect-dropdown>
+              </label>
+            </div>
+          </div>
+        </div>
+        <ng-template #loading let-user>Waiting...</ng-template>
+        <button class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

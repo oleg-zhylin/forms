@@ -1,0 +1,27 @@
+<div class="container" >
+  <div class="login-form">
+    <div class="main-div">
+      <div class="panel">
+        <p class="not-v">Please enter your email and password</p>
+      </div>
+        <form #f="ngForm" (ngSubmit)="signIn(f)" id="l-f">
+          <div class="panel">
+            <p>Please enter your login:</p>
+          </div>
+          <div class="form-group">
+            <input name="login" [(ngModel)]="login" required #loginCtrl="ngModel" class="form-control">
+          </div>
+          <p *ngIf="f.submitted === true && loginCtrl.valid === false" class="text-danger">Login is required.</p>
+          <div class="panel">
+            <p>Please enter your password:</p>
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" [(ngModel)]="password" required #passwordCtrl="ngModel" class="form-control">
+          </div>
+          <p *ngIf="f.submitted === true && passwordCtrl.valid === false" class="text-danger">Password is required.</p>
+          <p *ngIf="f.submitted === true && auth === false" class="text-danger">Login or password is incorrect, try again please.</p>
+          <button class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+  </div>
+</div>
