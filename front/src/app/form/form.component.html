@@ -38,6 +38,22 @@
                 <ss-multiselect-dropdown [options]="getOptions(element)" [(ngModel)]="optionsModel" [name]="element.name" [settings]="mySettings"></ss-multiselect-dropdown>
               </label>
             </div>
+            <div *ngIf="element.type == 'Date Interval'">
+              <label> <div>{{element.label}}: </div>
+                <input type="date"
+                       [id]="element.id"
+                       [name]="element.name"
+                       [(ngModel)]="element.init1"
+                       required
+                       #[element.name]="ngModel"
+                       min="{{element.lower_val}}" max="{{element.upper_val}}">
+              </label>
+            </div>
+            <div *ngIf="element.type == 'Select Item'">
+              <label> <div>{{element.label}}: </div>
+                <ss-multiselect-dropdown [options]="getOptions(element)" [(ngModel)]="element.name" [name]="element.name" [settings]="mySingleSettings"></ss-multiselect-dropdown>
+              </label>
+            </div>
           </div>
         </div>
         <ng-template #loading let-user>Waiting...</ng-template>

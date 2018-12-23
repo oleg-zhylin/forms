@@ -22,6 +22,17 @@ export class FormComponent implements OnInit {
     closeOnSelect: true
   };
 
+  mySingleSettings = {
+    enableSearch: true,
+    checkedStyle: 'fontawesome',
+    buttonClasses: 'btn btn-default btn-block',
+    dynamicTitleMaxItems: 3,
+    displayAllSelectedText: false,
+    closeOnSelect: true,
+    selectionLimit: 1,
+    autoUnselect: true
+  };
+
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit() {
