@@ -12,6 +12,7 @@
     "seed:undo": "./node_modules/knex/bin/cli.js seed:undo"
   },
   "dependencies": {
+    "angular2-config": "^1.1.1",
     "bookshelf": "^0.14.1",
     "bookshelf-soft-delete": "^5.0.0",
     "config": "^3.0.0",
@@ -27,6 +28,7 @@
     "lodash": "^4.17.11",
     "morgan": "~1.9.0",
     "pagination": "^0.4.6",
+    "pg": "^7.7.1",
     "registry": "^0.3.0",
     "visibility": "0.0.0"
   }

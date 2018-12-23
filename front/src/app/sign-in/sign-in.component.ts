@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Router} from '@angular/router';
+import {api_host} from "../constants";
 
 @Component({
   selector: 'app-sign-in',
@@ -22,7 +23,7 @@ export class SignInComponent implements OnInit {
   signIn(data) {
     if (data.invalid === false) {
       this.http.post<any>(
-        'http://localhost:3000/auth/sign-in',
+        'http://' + api_host + ':3000/auth/sign-in',
         data.form.value,
         {headers:{'Content-Type':  'application/json'}})
         .subscribe(resp => {

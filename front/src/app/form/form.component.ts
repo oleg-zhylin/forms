@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import {api_host, server_host} from "../constants";
 
 @Component({
   selector: 'app-form',
@@ -29,7 +30,7 @@ export class FormComponent implements OnInit {
     ];
   }
   loadForm() {
-    this.http.get<any>('http://localhost:3000/forms/'+ this.route.snapshot.paramMap.get('id'))
+    this.http.get<any>('http://' + api_host + ':3000/forms/'+ this.route.snapshot.paramMap.get('id'))
       .subscribe(resp => {
         this.form = resp;
       }, (err)=>{
@@ -38,16 +39,14 @@ export class FormComponent implements OnInit {
   }
 
   sendForm(data) {
-    console.log(data)
     let parametrs = JSON.stringify(data.form.value);
     let query = '';
     query += '?parametrs=' + parametrs;
     query += '&theme=' + this.form.theme;
     query += '&form_id=' + this.form.id;
 
-    this.http.get<any>('http://localhost:3001/' + query)
+    this.http.get<any>('http://' + server_host + ':3001/' + query)
       .subscribe(resp => {
-       console.log('true');
       }, (err)=>{
         console.log(err.status);
       });

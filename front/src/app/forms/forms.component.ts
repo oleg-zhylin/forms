@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {api_host} from "../constants";
 
 @Component({
   selector: 'app-forms',
@@ -18,7 +19,7 @@ export class FormsComponent implements OnInit {
   }
 
   loadFormsList() {
-    this.http.get<any>('http://localhost:3000/forms',)
+    this.http.get<any>('http://' + api_host + ':3000/forms',)
       .subscribe(resp => {
         this.forms = resp;
       }, (err)=>{
