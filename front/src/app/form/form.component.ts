@@ -63,14 +63,29 @@ export class FormComponent implements OnInit {
       });
 
   }
+  setStartPeriod(e, r, p, f) {
+    var period = f.controls[r].value;
+    if (p == 'sp') {
+      period = period.split('    ');
+      let sp = e.target.value;
+      let np = period[1];
+      f.controls[r].setValue(sp + '    ' + np);
+    }
+    if (p == 'np') {
+      period = period.split('    ');
+      let sp = period[0];
+      let np = e.target.value;
+      f.controls[r].setValue(sp + '    ' + np);
+    }
+  }
+
   getType(val) {
     if (val.var_typ = 'N') {
       return 'number'
     }
     return 'text';
   }
-
-  getOptions(element) {
+    getOptions(element) {
     let res = [];
     for (let i = 0; i < element.option_label.length; i++) {
       res.push(
