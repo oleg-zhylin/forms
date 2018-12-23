@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
       `envname ` + config.get('c_envname') + `\n` +
       `theme ` + query['theme'] + `\n` +
       `report ` + query['form_id'] + `\n` +
-      `pelet ` + config.get('c_pelet') + `+\n` +
+      `pelet ` + config.get('c_pelet') + `\n` +
       `openpg\n` ;
 
   for (let key in parametrs) {

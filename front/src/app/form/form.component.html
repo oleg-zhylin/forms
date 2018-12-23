@@ -66,10 +66,7 @@
                        value="{{element.init2}}"
                        min="{{element.lower_val}}" max="{{element.upper_val}}" class="form-control"/>
               </label>
-
              </div>
-
-
             <div *ngIf="element.type == 'Select Item'">
               <label> <div>{{element.label}}: </div>
                 <ss-multiselect-dropdown [options]="getOptions(element)" [(ngModel)]="element.name" [name]="element.name" [settings]="mySingleSettings"></ss-multiselect-dropdown>
