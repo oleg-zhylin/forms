@@ -3,7 +3,8 @@ exports.seed = function(knex, Promise) {
   return knex('forms').del()
     .then(function () {
       return knex('forms').insert([
-        {params: '{\n' +
+        {   theme: 'form 1',
+            params: '{\n' +
                 '    "params_count": 7,\n' +
                 '    "params_defs": [{\n' +
                 '        "id": 1,\n' +
@@ -80,7 +81,8 @@ exports.seed = function(knex, Promise) {
                 '        "option_value": [0, 1]\n' +
                 '    }]\n' +
                 '}'},
-        {params: '{\n' +
+        {   theme: 'form 2',
+            params: '{\n' +
                 '    "params_count": 4,\n' +
                 '    "params_defs": [{\n' +
                 '        "id": 1,\n' +
@@ -130,7 +132,8 @@ exports.seed = function(knex, Promise) {
                 '\t\t\t\t\t\t\t"Group XYZ"]\n' +
                 '    }]\n' +
                 '}'},
-        {params: '{\n' +
+        {   theme: 'form 3',
+            params: '{\n' +
                 '    "params_count": 3,\n' +
                 '    "params_defs": [{\n' +
                 '        "id": 1,\n' +

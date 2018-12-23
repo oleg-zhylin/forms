@@ -1,0 +1,9 @@
+{
+  "c_envname": "system-a",
+  "c_pelet": "folder",
+  "c_pgm_path": " /sigmo/env/sw_tarlogs",
+  "c_log_path": "/sigmo/env/sw_tarlogs",
+  "c_runenv": "env100",
+  "jvt_secret": "salt",
+  "sas_path": "./tmp"
+}

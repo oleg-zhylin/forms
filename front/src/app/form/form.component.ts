@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import {HttpClient} from "@angular/common/http";
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 
 @Component({
   selector: 'app-form',
@@ -9,27 +10,23 @@ import {HttpClient} from "@angular/common/http";
 })
 export class FormComponent implements OnInit {
   form: any;
-  selectedItems = [];
-  dropdownSettings = {};
-  formData = {};
+  optionsModel: number[];
+  myOptions: IMultiSelectOption[];
+  mySettings = {
+    enableSearch: true,
+    checkedStyle: 'fontawesome',
+    buttonClasses: 'btn btn-default btn-block',
+    dynamicTitleMaxItems: 3,
+    displayAllSelectedText: false,
+    closeOnSelect: true
+  };
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit() {
     this.loadForm();
-    this.selectedItems = [
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' }
+    this.myOptions = [
     ];
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true
-    };
   }
   loadForm() {
     this.http.get<any>('http://localhost:3000/forms/'+ this.route.snapshot.paramMap.get('id'))
@@ -41,7 +38,20 @@ export class FormComponent implements OnInit {
   }
 
   sendForm(data) {
-    console.log(data.form.value, this.formData);;
+    console.log(data)
+    let parametrs = JSON.stringify(data.form.value);
+    let query = '';
+    query += '?parametrs=' + parametrs;
+    query += '&theme=' + this.form.theme;
+    query += '&form_id=' + this.form.id;
+
+    this.http.get<any>('http://localhost:3001/' + query)
+      .subscribe(resp => {
+       console.log('true');
+      }, (err)=>{
+        console.log(err.status);
+      });
+
   }
   getType(val) {
     if (val.var_typ = 'N') {
@@ -50,18 +60,11 @@ export class FormComponent implements OnInit {
     return 'text';
   }
 
-  onItemSelect(item: any) {
-   // console.log(item);
-  }
-  onSelectAll(items: any, elem) {
-    //console.log(elem);
-  }
-
   getOptions(element) {
     let res = [];
     for (let i = 0; i < element.option_label.length; i++) {
       res.push(
-        { item_id: element.option_value[i], item_text: element.option_label[i] }
+        { id: element.option_value[i], name: element.option_label[i] }
       );
     }
     return res;

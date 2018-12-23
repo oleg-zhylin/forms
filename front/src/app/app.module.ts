@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +29,7 @@ import {MaxDirective} from "./directives/max.value.validator";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgMultiSelectDropDownModule.forRoot()
+    MultiselectDropdownModule
   ],
   providers: [
     {

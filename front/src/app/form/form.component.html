@@ -34,17 +34,8 @@
               </label><span>{{element.desc}}</span><br>
             </div>
             <div *ngIf="element.type == 'ComboBox'">
-              <label> <span>{{element.label}}: </span>
-                <ng-multiselect-dropdown
-                  [placeholder]="'custom placeholder'"
-                  [data]="getOptions(element)"
-                  ngModel
-                  [name]="element.name"
-                  [settings]="dropdownSettings"
-                  (onSelect)="onItemSelect($event, element)"
-                  (onSelectAll)="onSelectAll($event, element)"
-                >
-                </ng-multiselect-dropdown>
+              <label> <div>{{element.label}}: </div>
+                <ss-multiselect-dropdown [options]="getOptions(element)" [(ngModel)]="optionsModel" [name]="element.name" [settings]="mySettings"></ss-multiselect-dropdown>
               </label>
             </div>
           </div>

@@ -5,10 +5,10 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "migrations:create": "./node_modules/knex/bin/cli.js migrate:make",
-    "migrations:run": "./node_modules/knex/bin/cli.js migrate:latest",
-    "migrations:rollback": "./node_modules/knex/bin/cli.js migrate:rollback",
+    "migrations:run": "knex migrate:latest",
+    "migrations:rollback": "knex migrate:rollback",
     "seed:create": "./node_modules/knex/bin/cli.js seed:make",
-    "seed:run": "./node_modules/knex/bin/cli.js seed:run",
+    "seed:run": "knex seed:run",
     "seed:undo": "./node_modules/knex/bin/cli.js seed:undo"
   },
   "dependencies": {

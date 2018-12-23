@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
         .createTable('forms', function (table) {
             table.increments('id').primary();
             table.json('params');
+            table.string('theme');
         });
 };
 
