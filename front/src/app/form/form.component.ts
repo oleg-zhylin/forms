@@ -10,7 +10,9 @@ import {api_host, server_host} from "../constants";
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
+  private currentDate = new Date();
   form: any;
+  date = this.currentDate.getFullYear() + '-' + (this.currentDate.getMonth()+1) + '-' + this.currentDate.getDate();
   optionsModel: number[];
   myOptions: IMultiSelectOption[];
   mySettings = {
@@ -89,9 +91,23 @@ export class FormComponent implements OnInit {
     let res = [];
     for (let i = 0; i < element.option_label.length; i++) {
       res.push(
-        { id: element.option_value[i], name: element.option_label[i] }
+        { id: element.option_value[i], name: element.option_label[i],  }
       );
     }
     return res;
+  }
+  getStartValue(el) {
+    if (!el.init1){
+      return '';
+    }
+    for (let i = 0; i < el.option_label.length; i++) {
+      if(el.option_label[i] == el.init1) {
+        return {id:el.option_value[i]};
+      }
+    }
+    return '';
+  }
+  getInitDate (init) {
+    console.log(init);
   }
 }

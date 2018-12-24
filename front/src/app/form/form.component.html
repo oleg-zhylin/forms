@@ -1,19 +1,19 @@
 <div class="container" >
   <div class="login-form">
     <div class="main-div">
+      <h2 *ngIf="form && form.theme">{{form.theme}}</h2>
       <form #f="ngForm" (ngSubmit)="sendForm(f)">
         <div *ngIf="form && form.params && form.params.params_defs as params; else loading">
           <div *ngFor="let element of params">
-            <div *ngIf="element.type == 'Text'">
+            <div *ngIf="element.type == 'Text' && element.var_typ =='N'">
               <label>
                 <span>{{element.label}} </span>
                 <input class="form-control"
-                  [type]="getType(element)"
+                  type="number"
                   placeholder="min is {{element.lower_val}} and max is {{element.upper_val}}"
                   [id]="element.id"
                   [name]="element.name"
                   [(ngModel)]="element.init1"
-                  required
                   #[element.name]="ngModel"
                   [min]="element.lower_val"
                   [max]="element.upper_val"
@@ -33,9 +33,35 @@
                 </span>
               </label><span>{{element.desc}}</span><br>
             </div>
+            <div *ngIf="element.type == 'Text' && element.var_typ =='S'">
+              <label>
+                <span>{{element.label}} </span>
+                <input class="form-control"
+                       type="text"
+                       placeholder=""
+                       [id]="element.id"
+                       [name]="element.name"
+                       [(ngModel)]="element.init1"
+                       #[element.name]="ngModel"
+                />
+                <span *ngIf="f.form.controls[element.name] && f.form.controls[element.name].valid == false" class="text-danger">
+                  <span *ngIf="f.form.controls[element.name].errors && f.form.controls[element.name].errors.required">
+                    Field is required, please type it.
+                  </span>
+                  <span *ngIf="f.form.controls[element.name].errors && f.form.controls[element.name].errors.min">
+                    Field min value need be {{f.form.controls[element.name].errors.min.min}}
+                    but You typed {{f.form.controls[element.name].errors.min.actual}} .
+                  </span>
+                  <span *ngIf="f.form.controls[element.name].errors && f.form.controls[element.name].errors.max">
+                    Field max value need be {{f.form.controls[element.name].errors.max.max}}
+                    but You typed {{f.form.controls[element.name].errors.max.actual}} .
+                  </span>
+                </span>
+              </label><span>{{element.desc}}</span><br>
+            </div>
             <div *ngIf="element.type == 'ComboBox'">
-              <label> <div>{{element.label}}: </div>
-                <ss-multiselect-dropdown [options]="getOptions(element)" [(ngModel)]="optionsModel" [name]="element.name" [settings]="mySettings"></ss-multiselect-dropdown>
+              <label> <div>{{element.label}}:</div>
+                <ss-multiselect-dropdown [options]="getOptions(element)" [(ngModel)]="element.init1" [name]="element.name" [settings]="mySettings"></ss-multiselect-dropdown>
               </label>
             </div>
             <div *ngIf="element.type == 'Date'">
@@ -43,33 +69,64 @@
                 <input type="date"
                        [id]="element.id"
                        [name]="element.name"
-                       [(ngModel)]="element.init1"
-                       required
+                       [(ngModel)]="element.init1 ? element.init1: date"
                        #[element.name]="ngModel"
                        min="{{element.lower_val}}" max="{{element.upper_val}}">
               </label>
             </div>
+            <div *ngIf="element.type == 'Interval' && element.var_typ === 'N'">
+              <label> <div>{{element.label}}: </div>
+                <input type="hidden"
+                       [id]="element.id"
+                       [name]="element.name"
+                       [ngModel]="element.init1 +'    ' + element.init2"
+                       #[element.name]="ngModel"
+                       min="{{element.lower_val}}" max="{{element.upper_val}}"/>
 
+                <input type="number" (change)="setStartPeriod($event, element.name, 'sp', f )"
+                       value="{{element.init1}}"
+                       min="{{element.lower_val}}" max="{{element.upper_val}}" class="form-control"/>
+                <input type="number" (change)="setStartPeriod($event, element.name, 'np', f )"
+                       value="{{element.init2}}"
+                       min="{{element.lower_val}}" max="{{element.upper_val}}" class="form-control"/>
+              </label>
+            </div>
+            <div *ngIf="element.type == 'Interval' && element.var_typ === 'S'">
+              <label> <div>{{element.label}}: </div>
+                <input type="hidden"
+                       [id]="element.id"
+                       [name]="element.name"
+                       [ngModel]="element.init1 +'    ' + element.init2"
+                       #[element.name]="ngModel"
+                       />
+
+                <input type="text" (change)="setStartPeriod($event, element.name, 'sp', f )"
+                       value="{{element.init1}}"
+                      class="form-control"/>
+                <input type="text" (change)="setStartPeriod($event, element.name, 'np', f )"
+                       value="{{element.init2}}"
+                       class="form-control"/>
+              </label>
+            </div>
             <div *ngIf="element.type == 'Date Interval'">
               <label> <div>{{element.label}}: </div>
                 <input type="hidden"
                        [id]="element.id"
                        [name]="element.name"
                        [ngModel]="element.init1 +'    ' + element.init2"
-                       required
                        #[element.name]="ngModel"
                        min="{{element.lower_val}}" max="{{element.upper_val}}"/>
                 <input type="date" (change)="setStartPeriod($event, element.name, 'sp', f )"
-                       value="{{element.init1}}"
+                       value="{{element.init1 ? element.init1: date}}"
                        min="{{element.lower_val}}" max="{{element.upper_val}}" class="form-control"/>
                 <input type="date" (change)="setStartPeriod($event, element.name, 'np', f )"
-                       value="{{element.init2}}"
+                       value="{{element.init2 ? element.init2: date}}"
                        min="{{element.lower_val}}" max="{{element.upper_val}}" class="form-control"/>
               </label>
              </div>
             <div *ngIf="element.type == 'Select Item'">
-              <label> <div>{{element.label}}: </div>
-                <ss-multiselect-dropdown [options]="getOptions(element)" [(ngModel)]="element.name" [name]="element.name" [settings]="mySingleSettings"></ss-multiselect-dropdown>
+              <label> <div>{{element.label}}:</div>
+                <ss-multiselect-dropdown [options]="getOptions(element)" [(ngModel)]="getStartValue(element).id" [name]="element.name" [settings]="mySingleSettings"></ss-multiselect-dropdown>
               </label>
             </div>
           </div>

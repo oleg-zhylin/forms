@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
     if (typeof parametrs[key] != 'object') {
       fileContent += key + ` ` + parametrs[key] + `\n`;
     } else {
-      fileContent += key + ` ` + parametrs[key].toString() + `\n`;
+      fileContent += key + ` ` + parametrs[key].toString().replace(key + ',', '').replace(/,/g ,'    ') + `\n`;
     }
   }
 
