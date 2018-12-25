@@ -3,6 +3,10 @@ var router = express.Router();
 fs = require('fs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
+
+var util  = require('util'),
+    spawn = require('child_process').spawn;
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   let token = req.headers.authorization.split(' ')[1];
@@ -48,8 +52,11 @@ router.get('/', function(req, res, next) {
       `RUN;\n` +
       `PROC DISPLAY C=EIS.UTILF.PROJECT_BATCH.SCL BATCH;\n` +
       `RUN;\n`;
-  fs.writeFile( config.get('sas_path') + '/' + query['form_id'] + '_' +  now + '.sas', fileContent, function (err) {
+  let file = config.get('sas_path') + '/' + query['form_id'] + '_' +  now + '.sas';
+  fs.writeFile( file, fileContent, function (err) {
     if (err) return res.status(503).send('Write in to file error.');
+    let cmd = spawn(config.get('c_exec'), [file, file + '.ok']);
+
     return res.status(200).send('ok');
   });
 });
